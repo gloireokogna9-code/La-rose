@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Léontina ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#2a221e 0%,#0f0e0e 60%);display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Cormorant Garamond',serif}
+  .card{background:#fffaf3;max-width:500px;width:100%;padding:45px 35px;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);text-align:center}
+  .for{letter-spacing:.3em;text-transform:uppercase;font-size:11px;opacity:.6}
+  .name{font-family:'Great Vibes',cursive;font-size:58px;margin:10px 0;color:#1a1210}
+  .line{width:40px;height:1px;background:#c9a88a;margin:15px auto}
+  input{width:100%;padding:15px;border-radius:12px;border:1px solid #e8d5c3;font-size:16px;margin-top:20px;text-align:center;font-family:inherit;box-sizing:border-box}
+  button{margin-top:15px;background:#1a1210;color:#fffaf3;border:0;padding:14px 24px;border-radius:12px;width:100%;font-size:16px;cursor:pointer;transition:.2s}
+  button:hover{opacity:.9}
+  .hint{font-size:13px;margin-top:12px;opacity:.6;font-style:italic}
+  #err{color:#b33;display:none;margin-top:10px;font-size:14px}
+  .page{display:none;text-align:left;line-height:1.8;font-size:18px;color:#2b211d;animation:fade .5s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .quiz-opt{display:block;width:100%;margin:10px 0;padding:14px;border:1px solid #e8d5c3;border-radius:12px;background:white;cursor:pointer;text-align:left}
+  .quiz-opt:hover{background:#1a1210;color:white}
+  .sig{font-family:'Great Vibes',cursive;font-size:36px;text-align:right;margin-top:30px}
+</style>
+</head>
+<body>
+
+<!-- PAGE LOCK -->
+<div class="card" id="lock">
+  <div class="for">Surprise pour</div>
+  <div class="name">Léontina</div>
+  <div class="line"></div>
+  <p>Une petite surprise pour toi 💌<br>Mais d'abord, une énigme</p>
+  <input id="pass" type="password" placeholder="••••••••">
+  <div class="hint">Petit indice : c'est mon anniversaire 😉</div>
+  <button onclick="check()">Ouvrir</button>
+  <div id="err">Ce n'est pas ça 🥺 Re-essaye</div>
+</div>
+
+<!-- PAGE 1 LETTRE -->
+<div class="card page" id="page1">
+  <div class="for" style="text-align:center">Pour toi</div>
+  <div class="name" style="text-align:center">Léontina</div>
+  <div class="line"></div>
+  <p>Ma Léontina,</p>
+  <p>Je voulais te faire quelque chose de différent. Pas juste un message, mais un petit monde rien que pour toi.</p>
+  <p>Chaque détail ici me fait penser à toi. À ton sourire, à ta façon de rendre les choses simples et belles à la fois.</p>
+  <p>Tu es importante pour moi. Plus que tu ne l'imagines.</p>
+  <div class="sig">Toujours toi</div>
+  <button onclick="go('page2')">Continuer vers le quiz →</button>
+</div>
+
+<!-- PAGE 2 QUIZ COULEUR -->
+<div class="card page" id="page2">
+  <div class="for">Question 1 / 2</div>
+  <h2 style="font-family:'Great Vibes',cursive;font-size:32px;margin:10px 0">Tu me connais vraiment ?</h2>
+  <p><b>Ma couleur préférée c'est :</b></p>
+  <button class="quiz-opt" onclick="answer(this,false)">🔵 Bleu</button>
+  <button class="quiz-opt" onclick="answer(this,true)">🔴 Rouge</button>
+  <button class="quiz-opt" onclick="answer(this,false)">🟣 Violet</button>
+  <p id="res2" style="display:none;margin-top:15px;font-style:italic"></p>
+</div>
+
+<!-- PAGE 3 QUIZ ARTISTE -->
+<div class="card page" id="page3">
+  <div class="for">Question 2 / 2</div>
+  <h2 style="font-family:'Great Vibes',cursive;font-size:32px;margin:10px 0">Dernière question</h2>
+  <p><b>Mon artiste préféré c'est :</b></p>
+  <button class="quiz-opt" onclick="finalAnswer(this,false)">🎤 Dadju</button>
+  <button class="quiz-opt" onclick="finalAnswer(this,true)">🎤 Fally Ipupa</button>
+  <button class="quiz-opt" onclick="finalAnswer(this,false)">🎤 Tiakola</button>
+  <p id="res3" style="display:none;margin-top:15px;font-style:italic"></p>
+</div>
+
+<!-- PAGE FINALE -->
+<div class="card page" id="finale">
+  <div class="name" style="text-align:center">Bravo ❤️</div>
+  <div class="line"></div>
+  <p>Tu as trouvé. Tu me connais par cœur.</p>
+  <p>C'est pour ça que j'aime passer du temps avec toi. Il n'y a pas de faux-semblants, juste nous.</p>
+  <p>J'aimerais qu'on se fasse ce petit moment tranquille, juste toi et moi. Tu dis quand ?</p>
+  <div class="sig">À toi</div>
+  <div style="text-align:center;margin-top:25px;color:#c9a88a;letter-spacing:.3em">— ♥ —</div>
+</div>
+
+<script>
+function check(){
+  let v=document.getElementById('pass').value.toLowerCase().trim();
+  if(v.includes("19") || v.includes("janvier") || v.includes("19/01") || v.includes("19-01")){
+    document.getElementById('lock').style.display='none';
+    document.getElementById('page1').style.display='block';
+  } else {
+    document.getElementById('err').style.display='block';
+  }
+}
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+function answer(el,good){
+  let r=document.getElementById('res2');
+  r.style.display='block';
+  if(good){ r.innerHTML="Oui c'est ça ! Tu sais tout de moi 😏"; setTimeout(()=>go('page3'),1200); }
+  else{ r.innerHTML="Presque ! Mais c'est Rouge ❤️ On continue quand même..."; setTimeout(()=>go('page3'),1500); }
+}
+function finalAnswer(el,good){
+  let r=document.getElementById('res3');
+  r.style.display='block';
+  if(good){ r.innerHTML="Exact ! Tu es incollable 😍"; }
+  else{ r.innerHTML="C'était Fally ! Mais t'étais pas loin..."; }
+  setTimeout(()=>go('finale'),1500);
+}
+</script>
+</body>
+</html>
